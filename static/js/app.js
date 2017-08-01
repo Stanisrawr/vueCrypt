@@ -13,6 +13,10 @@
  let app=new Vue
  ({
 
+    created:function()
+    {
+        this.getCoinData();
+    },
     el:"#app",
     data:
     {
@@ -44,15 +48,29 @@
           */
        getCoins:function()
        {
+            let self=this;
+            
+            axios.get(CRYPTOCOMPARE_API_URI+"/v1/ticker/?limit=10")
+              .then((resp)=>{
+                  this.coinData=resp.data;
+                  this.getCoins();
+              })
+              .catch((err)=>{
+                  this.getCoins();
+                  console.error(err);
+              });  
 
 
-        
        },
           /**
              * Given a cryptocurrency ticket symbol, return the currency's logo
              * image.
           */
-       getCoinImage:function(symbol){}
+       getCoinImage:function(symbol)
+       {
+            return CRYPTOCOMPARE_API_URI+this.coinData[symbol].ImageUrl;
+
+       }
 
                
 
