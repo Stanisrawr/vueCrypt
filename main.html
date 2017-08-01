@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <!-- All that Vue cares about is what is inside this div. -->
+   <div id="app">
+      <p>What's your favorite color?</p>
+      <input v-model="color" type="text">
+      <p>Your favorite color is... {{ color }}</p>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data: {
+          color: ''
+        }
+      });
+    </script>
+  </body>
+</html>
