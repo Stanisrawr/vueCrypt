@@ -88,5 +88,5 @@
  });
 
  setInterval(() => {
-  app.getCoins();
+  app.getCoinData();
 }, updateInterval);
