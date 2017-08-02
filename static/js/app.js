@@ -13,10 +13,11 @@
  let app=new Vue
  ({
 
-    created:function()
-    {
-        this.getCoinData();
-    },
+     created:function()
+       {
+           console.log("ran");
+          this.getCoinData();
+       },
     el:"#app",
     data:
     {
@@ -46,7 +47,7 @@
              * Get the top 10 cryptocurrencies by value.  This data is refreshed every 5
              * minutes by the backing API service.
           */
-       getCoins:function()
+       /* getCoins:function()
        {
             let self=this;
             
@@ -61,22 +62,31 @@
               });  
 
 
-       },
+       }, */
           /**
              * Given a cryptocurrency ticket symbol, return the currency's logo
              * image.
           */
-       getCoinImage:function(symbol)
-       {
-            return CRYPTOCOMPARE_API_URI+this.coinData[symbol].ImageUrl;
-
-       }
-
+      /*  getCoinImage:function(symbol)
+       { 
+           console.log(CRYPTOCOMPARE_API_URI + this.coinData[symbol].ImageUrl);
+            return CRYPTOCOMPARE_API_URI + this.coinData[symbol].ImageUrl;
                
+       }, */
 
+       getColor: (num) => 
+       {
+            return num > 0 ? "color:green;" : "color:red;";
+       },
+       
+      
 
     }
 
     
 
  });
+
+ setInterval(() => {
+  app.getCoins();
+}, updateInterval);
