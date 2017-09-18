@@ -21,10 +21,10 @@
     },
     methods:
     {
-          /**
-             * Load up all cryptocurrency data.  This data is used to find what logos
-             * each currency has, so we can display things in a friendly way.
-          */ 
+           /**
+             * Get the top 10 cryptocurrencies by value.  This data is refreshed every 5
+             * minutes by the backing API service.
+          */
         getCoins: function()
         {
             let self = this;
@@ -36,23 +36,43 @@
                 .catch((err) => {
                 console.error(err);
                 });
-            },
+        },
           /**
-             * Get the top 10 cryptocurrencies by value.  This data is refreshed every 5
-             * minutes by the backing API service.
+             * Load up all cryptocurrency data.  This data is used to find what logos
+             * each currency has, so we can display things in a friendly way.
           */
-        getCoinData: function() {
-      let self = this;
-        axios.get("http://cors.io/?u="+CRYPTOCOMPARE_API_URI)
-        .then((resp) => {
-          this.coinData = resp.data.Data;
-          this.getCoins();
-        })
-        .catch((err) => {
-          this.getCoins();
-          console.error(err);
-        });
-    },
+        getCoinData: function()
+        {
+
+            let self = this;
+            if(axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI)!=null){
+                axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI)
+                .then((resp) => {
+                this.coinData = resp.data.Data;
+                this.getCoins();
+                console.log(axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI));
+                console.log(axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI).resp);
+                })
+                .catch((err) => {
+                this.getCoins();
+                console.error(err);
+                });
+              }
+
+              else if(axios.get(CRYPTOCOMPARE_API_URI).resp!=null){
+                axios.get(CRYPTOCOMPARE_API_URI)
+                .then((resp) => {
+                this.coinData = resp.data.Data;
+                this.getCoins();
+                })
+                .catch((err) => {
+                this.getCoins();
+                console.error(err);
+                });
+
+              }
+        },
+            
           /**
              * Given a cryptocurrency ticket symbol, return the currency's logo
              * image.
@@ -61,8 +81,10 @@
        { 
            symbol = (symbol === "MIOTA" ? "IOT" : symbol);
            symbol = (symbol === "VERI" ? "VRM" : symbol);
+           if(this.coinData[symbol].ImageUrl!=null){
             return "https://www.cryptocompare.com" +  this.coinData[symbol].ImageUrl;
-               
+           }
+           else return "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Arabic_Question_mark_%28RTL%29.svg/250px-Arabic_Question_mark_%28RTL%29.svg.png"
        }, 
 
        getColor: (num) => 
