@@ -45,13 +45,16 @@
         {
 
             let self = this;
-            if(axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI)!=null){
+/*
+if(axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI)!=null){
                 axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI)
+*/
+            if(axios.get(CRYPTOCOMPARE_API_URI)!=null){
+                axios.get(CRYPTOCOMPARE_API_URI)
                 .then((resp) => {
                 this.coinData = resp.data.Data;
                 this.getCoins();
-                console.log(axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI));
-                console.log(axios.get("https://cors.io/?"+CRYPTOCOMPARE_API_URI).resp);
+               
                 })
                 .catch((err) => {
                 this.getCoins();
