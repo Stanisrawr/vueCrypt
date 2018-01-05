@@ -5,7 +5,7 @@
  */
 
 // set up for apis
- let CRYPTOCOMPARE_API_URI="https://www.cryptocompare.com/api/data/coinlist/";
+ let CRYPTOCOMPARE_API_URI="https://cors.io/?https://www.cryptocompare.com/api/data/coinlist/";
  let COINMARKET_API_URI="https://api.coinmarketcap.com";
 
  let updateInterval=60*1000;
